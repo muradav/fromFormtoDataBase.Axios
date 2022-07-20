@@ -1,0 +1,79 @@
+﻿@model ContactUs
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <form >
+        <div class="col-6 mb-3">
+            <label name="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control">
+        </div>
+        <div class="col-6 mb-3">
+            <label name="PhoneNumber" class="form-label">Phone</label>
+            <input asp-for="PhoneNumber" class="form-control">
+        </div>
+        <div class="col-6 mb-3">
+            <label name="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control">
+        </div>
+        <div class="col-6 mb-3">
+            <label name="Subject" class="form-label">Subject</label>
+            <input asp-for="Subject" class="form-control">
+        </div>
+        <div class="col-6 mb-3">
+            <label name="Message" class="form-label">Message</label>
+            <textarea asp-for="Message" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="text-center text-md-left">
+            <button  class="btn btn-primary" id="submitBtn">Send</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+
+    
+
+<script>
+    let name = document.getElementById("Name");
+    let email = document.getElementById("Email");
+    let phone = document.getElementById("PhoneNumber");
+    let subject = document.getElementById("Subject");
+    let message = document.getElementById("Message");
+    let submitBtn = document.getElementById("submitBtn");
+
+  
+
+    submitBtn.onclick = function (e) {
+        e.preventDefault();
+        var formData = new FormData();
+        formData.append("Name", name.value);
+        formData.append("Email", email.value);
+        formData.append("Phone", phone.value);
+        formData.append("Subject", subject.value);
+        formData.append("Message", message.value);
+        console.log(name);
+        axios({
+            method: 'post',
+            url: '/home/index',
+            data: formData
+        })
+            .then(function (response) {
+                swal({
+                    title: "Good job!",
+                    text: "You clicked the button!",
+                    icon: "success",
+                });
+                console.log(response);
+            })
+            .catch(function (response) {
+                console.log(response);
+            });
+    };
+
+    
+</script>
+
+ }
